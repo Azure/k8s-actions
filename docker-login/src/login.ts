@@ -4,7 +4,7 @@ import { issueCommand } from '@actions/core/lib/command';
 import * as path from 'path';
 import * as fs from 'fs';
 
-function run() {
+async function run() {
     let username = core.getInput('username', { required: true });
     let password = core.getInput('password', { required: true });
     let loginServer = core.getInput('loginServer', { required: true });
@@ -22,7 +22,7 @@ function run() {
 
     const runnerTempDirectory = process.env['RUNNER_TEMPDIRECTORY']; // Using process.env until the core libs are updated
     const dirPath = path.join(runnerTempDirectory, `docker_login_${Date.now()}`);
-    io.mkdirP(dirPath);
+    await io.mkdirP(dirPath);
     const dockerConfigPath = path.join(dirPath, `config.json`);
     core.debug(`Writing docker config contents to ${dockerConfigPath}`);
     fs.writeFileSync(dockerConfigPath, JSON.stringify(config));
@@ -30,8 +30,4 @@ function run() {
     console.log('DOCKER_CONFIG environment variable is set');
 }
 
-try {
-    run();
-} catch (ex) {
-    core.setFailed(ex);
-}
+run().catch(core.setFailed);
