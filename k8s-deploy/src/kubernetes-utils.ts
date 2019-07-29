@@ -6,17 +6,29 @@ function getImagePullSecrets(inputObject: any) {
         return;
     }
 
-    try {
-        if (isEqual(inputObject.kind, 'cronjob')) {
-            return inputObject.spec.jobTemplate.spec.template.spec.imagePullSecrets;
-        } else if (isEqual(inputObject.kind, 'pod')) {
-            return inputObject.spec.imagePullSecrets;
-        } else if (!!inputObject.spec.template && !!inputObject.spec.template.spec) {
-            return inputObject.spec.template.spec.imagePullSecrets;
-        }
-    } catch (ex) {
-        core.debug(`Fetching imagePullSecrets failed due to this error: ${JSON.stringify(ex)}`);
-        return;
+    if (isEqual(inputObject.kind, 'pod')
+        && inputObject
+        && inputObject.spec
+        && inputObject.spec.imagePullSecrets) {
+
+        return inputObject.spec.imagePullSecrets;
+    } else if (isEqual(inputObject.kind, 'cronjob')
+        && inputObject
+        && inputObject.spec
+        && inputObject.spec.jobTemplate
+        && inputObject.spec.jobTemplate.spec
+        && inputObject.spec.jobTemplate.spec.template
+        && inputObject.spec.jobTemplate.spec.template.spec
+        && inputObject.spec.jobTemplate.spec.template.spec.imagePullSecrets) {
+
+        return inputObject.spec.jobTemplate.spec.template.spec.imagePullSecrets;
+    } else if (inputObject
+        && inputObject.spec
+        && inputObject.spec.template
+        && inputObject.spec.template.spec
+        && inputObject.spec.template.spec.imagePullSecrets) {
+
+        return inputObject.spec.template.spec.imagePullSecrets;
     }
 }
 
@@ -24,32 +36,47 @@ function setImagePullSecrets(inputObject: any, newImagePullSecrets: any) {
     if (!inputObject || !inputObject.spec || !newImagePullSecrets) {
         return;
     }
-    try {
-        if (isEqual(inputObject.kind, 'pod')) {
+
+    if (isEqual(inputObject.kind, 'pod')) {
+        if (inputObject
+            && inputObject.spec
+            && inputObject.spec.imagePullSecrets) {
             if (newImagePullSecrets.length > 0) {
                 inputObject.spec.imagePullSecrets = newImagePullSecrets;
             } else {
                 delete inputObject.spec.imagePullSecrets;
             }
-        } else if (isEqual(inputObject.kind, 'cronjob')) {
+        }
+    } else if (isEqual(inputObject.kind, 'cronjob')) {
+        if (inputObject
+            && inputObject.spec
+            && inputObject.spec.jobTemplate
+            && inputObject.spec.jobTemplate.spec
+            && inputObject.spec.jobTemplate.spec.template
+            && inputObject.spec.jobTemplate.spec.template.spec
+            && inputObject.spec.jobTemplate.spec.template.spec.imagePullSecrets) {
             if (newImagePullSecrets.length > 0) {
                 inputObject.spec.jobTemplate.spec.template.spec.imagePullSecrets = newImagePullSecrets;
             } else {
                 delete inputObject.spec.jobTemplate.spec.template.spec.imagePullSecrets;
             }
-        } else if (!!inputObject.spec.template && !!inputObject.spec.template.spec) {
+        }
+    } else if (!!inputObject.spec.template && !!inputObject.spec.template.spec) {
+        if (inputObject
+            && inputObject.spec
+            && inputObject.spec.template
+            && inputObject.spec.template.spec
+            && inputObject.spec.template.spec.imagePullSecrets) {
             if (newImagePullSecrets.length > 0) {
                 inputObject.spec.template.spec.imagePullSecrets = newImagePullSecrets;
             } else {
                 delete inputObject.spec.template.spec.imagePullSecrets;
             }
         }
-    } catch (ex) {
-        core.debug(`Overriding imagePullSecrets failed due to this error: ${JSON.stringify(ex)}`);
     }
 }
 
-function substituteImageNameInSpecFile(currentString: string, imageName: string, imageNameWithNewTag: string) {
+function substituteImageNameInSpecContent(currentString: string, imageName: string, imageNameWithNewTag: string) {
     if (currentString.indexOf(imageName) < 0) {
         core.debug(`No occurence of replacement token: ${imageName} found`);
         return currentString;
@@ -81,7 +108,7 @@ export function updateContainerImagesInManifestFiles(contents, containers: strin
                 imageName = imageName.split('@')[0];
             }
             if (contents.indexOf(imageName) > 0) {
-                contents = substituteImageNameInSpecFile(contents, imageName, container);
+                contents = substituteImageNameInSpecContent(contents, imageName, container);
             }
         });
 

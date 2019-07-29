@@ -1,5 +1,5 @@
-name: 'Deploy to AKS cluster'
-description: 'Deploy to AKS cluster'
+name: 'Deploy to Kubernetes cluster'
+description: 'Deploy to Kubernetes cluster'
 inputs: 
   namespace:
     description: 'namespace'

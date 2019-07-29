@@ -20,7 +20,7 @@ const kubectl_util_1 = require("./kubectl-util");
 const allVersions = toolCache.findAllVersions('kubectl');
 let kubectlPath = allVersions.length > 0 ? toolCache.find('kubectl', allVersions[0]) : '';
 if (!kubectlPath && !core.getInput('kubectl-version')) {
-    core.setFailed('Kubectl is not installed, either add install-kubectl action or provice "kubectl-version" input to download kubectl');
+    core.setFailed('Kubectl is not installed, either add install-kubectl action or provide "kubectl-version" input to download kubectl');
 }
 kubectlPath = path.join(kubectlPath, `kubectl${utils_1.getExecutableExtension()}`);
 function deploy(manifests, namespace) {

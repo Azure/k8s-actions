@@ -6,28 +6,38 @@ function getImagePullSecrets(inputObject) {
     if (!inputObject || !inputObject.spec) {
         return;
     }
-    try {
-        if (utils_1.isEqual(inputObject.kind, 'cronjob')) {
-            return inputObject.spec.jobTemplate.spec.template.spec.imagePullSecrets;
-        }
-        else if (utils_1.isEqual(inputObject.kind, 'pod')) {
-            return inputObject.spec.imagePullSecrets;
-        }
-        else if (!!inputObject.spec.template && !!inputObject.spec.template.spec) {
-            return inputObject.spec.template.spec.imagePullSecrets;
-        }
+    if (utils_1.isEqual(inputObject.kind, 'pod')
+        && inputObject
+        && inputObject.spec
+        && inputObject.spec.imagePullSecrets) {
+        return inputObject.spec.imagePullSecrets;
     }
-    catch (ex) {
-        core.debug(`Fetching imagePullSecrets failed due to this error: ${JSON.stringify(ex)}`);
-        return;
+    else if (utils_1.isEqual(inputObject.kind, 'cronjob')
+        && inputObject
+        && inputObject.spec
+        && inputObject.spec.jobTemplate
+        && inputObject.spec.jobTemplate.spec
+        && inputObject.spec.jobTemplate.spec.template
+        && inputObject.spec.jobTemplate.spec.template.spec
+        && inputObject.spec.jobTemplate.spec.template.spec.imagePullSecrets) {
+        return inputObject.spec.jobTemplate.spec.template.spec.imagePullSecrets;
+    }
+    else if (inputObject
+        && inputObject.spec
+        && inputObject.spec.template
+        && inputObject.spec.template.spec
+        && inputObject.spec.template.spec.imagePullSecrets) {
+        return inputObject.spec.template.spec.imagePullSecrets;
     }
 }
 function setImagePullSecrets(inputObject, newImagePullSecrets) {
     if (!inputObject || !inputObject.spec || !newImagePullSecrets) {
         return;
     }
-    try {
-        if (utils_1.isEqual(inputObject.kind, 'pod')) {
+    if (utils_1.isEqual(inputObject.kind, 'pod')) {
+        if (inputObject
+            && inputObject.spec
+            && inputObject.spec.imagePullSecrets) {
             if (newImagePullSecrets.length > 0) {
                 inputObject.spec.imagePullSecrets = newImagePullSecrets;
             }
@@ -35,7 +45,15 @@ function setImagePullSecrets(inputObject, newImagePullSecrets) {
                 delete inputObject.spec.imagePullSecrets;
             }
         }
-        else if (utils_1.isEqual(inputObject.kind, 'cronjob')) {
+    }
+    else if (utils_1.isEqual(inputObject.kind, 'cronjob')) {
+        if (inputObject
+            && inputObject.spec
+            && inputObject.spec.jobTemplate
+            && inputObject.spec.jobTemplate.spec
+            && inputObject.spec.jobTemplate.spec.template
+            && inputObject.spec.jobTemplate.spec.template.spec
+            && inputObject.spec.jobTemplate.spec.template.spec.imagePullSecrets) {
             if (newImagePullSecrets.length > 0) {
                 inputObject.spec.jobTemplate.spec.template.spec.imagePullSecrets = newImagePullSecrets;
             }
@@ -43,7 +61,13 @@ function setImagePullSecrets(inputObject, newImagePullSecrets) {
                 delete inputObject.spec.jobTemplate.spec.template.spec.imagePullSecrets;
             }
         }
-        else if (!!inputObject.spec.template && !!inputObject.spec.template.spec) {
+    }
+    else if (!!inputObject.spec.template && !!inputObject.spec.template.spec) {
+        if (inputObject
+            && inputObject.spec
+            && inputObject.spec.template
+            && inputObject.spec.template.spec
+            && inputObject.spec.template.spec.imagePullSecrets) {
             if (newImagePullSecrets.length > 0) {
                 inputObject.spec.template.spec.imagePullSecrets = newImagePullSecrets;
             }
@@ -52,11 +76,8 @@ function setImagePullSecrets(inputObject, newImagePullSecrets) {
             }
         }
     }
-    catch (ex) {
-        core.debug(`Overriding imagePullSecrets failed due to this error: ${JSON.stringify(ex)}`);
-    }
 }
-function substituteImageNameInSpecFile(currentString, imageName, imageNameWithNewTag) {
+function substituteImageNameInSpecContent(currentString, imageName, imageNameWithNewTag) {
     if (currentString.indexOf(imageName) < 0) {
         core.debug(`No occurence of replacement token: ${imageName} found`);
         return currentString;
@@ -84,7 +105,7 @@ function updateContainerImagesInManifestFiles(contents, containers) {
                 imageName = imageName.split('@')[0];
             }
             if (contents.indexOf(imageName) > 0) {
-                contents = substituteImageNameInSpecFile(contents, imageName, container);
+                contents = substituteImageNameInSpecContent(contents, imageName, container);
             }
         });
     }
