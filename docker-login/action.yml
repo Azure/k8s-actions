@@ -1,0 +1,24 @@
+name: 'Docker Login'
+description: 'Login docker'
+inputs: 
+  username:
+    description: 'Docker username'
+    required: true
+    default: ''
+  password:
+    description: 'Docker password'
+    required: true
+    default: ''
+  loginServer:
+    description: 'Login Server'
+    required: true
+    default: 'index.docker.io'
+  email:
+    description: 'Email'
+    required: true
+    default: ''
+branding:
+  color: 'green'
+runs:
+  using: 'node'
+  main: 'lib/login.js'
