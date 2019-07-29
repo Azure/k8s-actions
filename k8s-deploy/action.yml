@@ -1,0 +1,25 @@
+name: 'Deploy to AKS cluster'
+description: 'Deploy to AKS cluster'
+inputs: 
+  namespace:
+    description: 'namespace'
+    required: false
+  manifests:
+    description: 'Kubernetes Manifests to deploy'
+    required: true
+    default: ''
+  images: 
+    description: 'Fully qualified resource URL of the image(s) to be used for substitutions on the manifest files
+Example: contosodemo.azurecr.io/helloworld:test'
+    required: false
+  imagepullsecrets:
+    description: 'Name of a docker-registry secret that has already been set up within the cluster. Each of these secret names are added under imagePullSecrets field for the workloads found in the input manifest files'
+    required: false
+  kubectl-version:
+      description: 'Version of kubectl'
+      required: false
+branding:
+  color: 'green' # optional, decorates the entry in the GitHub Marketplace
+runs:
+  using: 'node'
+  main: 'lib/run.js'
