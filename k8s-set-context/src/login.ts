@@ -1,0 +1,88 @@
+import * as core from '@actions/core';
+import { issueCommand } from '@actions/core/lib/command';
+import * as path from 'path';
+import * as fs from 'fs';
+import * as io from '@actions/io';
+import * as toolCache from '@actions/tool-cache';
+import * as os from 'os';
+import { ToolRunner } from "@actions/exec/lib/toolrunner";
+
+function getKubeconfig(): string {
+    const kubeconfig = core.getInput('kubeconfig');
+    if (kubeconfig) {
+        core.debug("Setting context using kubeconfig");
+        return kubeconfig;
+    }
+    const clusterUrl = core.getInput('clusterUrl', { required: true });
+    core.debug("Found clusterUrl, creating kubeconfig using certificate and token");
+    let certificate = core.getInput('certificate');
+    let token = Buffer.from(core.getInput('token'), 'base64').toString();
+    if (!certificate) certificate = '';
+    const kubeconfigObject = {
+        "apiVersion": "v1",
+        "kind": "Config",
+        "clusters": [
+            {
+                "cluster": {
+                    "certificate-authority-data": certificate,
+                    "server": clusterUrl
+                }
+            }
+        ],
+        "users": [
+            {
+                "user": {
+                    "token": token
+                }
+            }
+        ]
+    };
+
+    return JSON.stringify(kubeconfigObject);
+}
+
+function getExecutableExtension(): string {
+    if (os.type().match(/^Win/)) {
+        return '.exe';
+    }
+
+    return '';
+}
+
+async function getKubectlPath() {
+    let kubectlPath = await io.which('kubectl', false);
+    if (!kubectlPath) {
+        const allVersions = toolCache.findAllVersions('kubectl');
+        kubectlPath = allVersions.length > 0 ? toolCache.find('kubectl', allVersions[0]) : '';
+        if (!kubectlPath) {
+            throw new Error('Kubectl is not installed');
+        }
+
+        kubectlPath = path.join(kubectlPath, `kubectl${getExecutableExtension()}`);
+    }
+    return kubectlPath;
+}
+
+async function setContext() {
+    const kubectlPath = await getKubectlPath();
+    let context = core.getInput('context');
+    if (context) {
+        const toolRunner = new ToolRunner(kubectlPath, ['config', 'use-context', context]);
+        await toolRunner.exec();
+    }
+    const toolRunner = new ToolRunner(kubectlPath, ['config', 'current-context']);
+    await toolRunner.exec();
+}
+
+async function run() {
+    let kubeconfig = getKubeconfig();
+    const runnerTempDirectory = process.env['RUNNER_TEMPDIRECTORY']; // Using process.env until the core libs are updated
+    const kubeconfigPath = path.join(runnerTempDirectory, `kubeconfig_${Date.now()}`);
+    core.debug(`Writing kubeconfig contents to ${kubeconfigPath}`);
+    fs.writeFileSync(kubeconfigPath, kubeconfig);
+    issueCommand('set-env', { name: 'KUBECONFIG' }, kubeconfigPath);
+    console.log('KUBECONFIG environment variable is set');
+    await setContext();
+}
+
+run().catch(core.setFailed);
