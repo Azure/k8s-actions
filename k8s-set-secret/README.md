@@ -3,7 +3,7 @@
 ```yaml
     # Assumes that the secret will be created in the cluster context which was set in the action above
     - name: Set imagePullSecret
-      uses: azure/actions/k8s-set-secret@master
+      uses: azure/k8s-actions/k8s-set-secret@master
       with:
         namespace: 'myapp'
         container-registry-url: 'containerregistry.contoso.com'
