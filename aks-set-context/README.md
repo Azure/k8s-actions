@@ -9,3 +9,14 @@ uses: azure/k8s-actions/aks-set-context@master
         clusterName: '<cluster name>'
     id: login
 ```
+
+## creds object example
+```json
+{
+  "appId": "<app id>",
+  "displayName": "<display name>",
+  "name": "<name>",
+  "password": "<password>",
+  "tenant": "<tenant id>"
+}
+```

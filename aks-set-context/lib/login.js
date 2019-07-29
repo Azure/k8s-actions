@@ -43,10 +43,7 @@ function getAzureAccessToken() {
             "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
         };
         let webRequestOptions = {
-            retriableErrorCodes: null,
             retriableStatusCodes: [400, 408, 409, 500, 502, 503, 504],
-            retryCount: null,
-            retryIntervalInSeconds: null
         };
         client_1.sendRequest(webRequest, webRequestOptions).then((response) => {
             if (response.statusCode == 200) {
@@ -84,7 +81,6 @@ function getAKSKubeconfig(azureSessionToken) {
 }
 function getKubeconfig() {
     return __awaiter(this, void 0, void 0, function* () {
-        core.debug("Trying az login");
         let azureSessionToken = yield getAzureAccessToken();
         let kubeconfig = yield getAKSKubeconfig(azureSessionToken);
         return kubeconfig;

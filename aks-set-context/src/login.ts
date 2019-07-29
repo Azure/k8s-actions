@@ -35,10 +35,7 @@ function getAzureAccessToken(): Promise<string> {
         };
 
         let webRequestOptions: WebRequestOptions = {
-            retriableErrorCodes: null,
             retriableStatusCodes: [400, 408, 409, 500, 502, 503, 504],
-            retryCount: null,
-            retryIntervalInSeconds: null
         };
 
         sendRequest(webRequest, webRequestOptions).then(
@@ -81,7 +78,6 @@ function getAKSKubeconfig(azureSessionToken: string): Promise<string> {
 }
 
 async function getKubeconfig(): Promise<string> {
-    core.debug("Trying az login");
     let azureSessionToken = await getAzureAccessToken();
     let kubeconfig = await getAKSKubeconfig(azureSessionToken);
     return kubeconfig;
