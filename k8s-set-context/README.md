@@ -20,7 +20,7 @@ PS: `kubeconfig` takes precedence (i.e. kubeconfig would be created using the va
 
 ###Steps to get certificate and token: 
 ```sh
-# Copy the secret name from the output of the get service account command
+# Copy the secret name from the output of the get secret command
 ~/$ kubectl get serviceaccounts <service-account-name> -o yaml
 ~/$ kubectl get secret <service-account-secret-name> -o yaml
 ```
