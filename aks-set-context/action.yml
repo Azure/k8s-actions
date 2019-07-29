@@ -15,6 +15,14 @@ inputs:
     description: 'AKS Cluster Name'
     required: false
     default: ''
+  cloudEnvironmentUrl:
+    description: 'Cloud Environment URL'
+    required: false
+    default: 'https://management.azure.com'
+  activeDirectoryAuthorityUrl: 
+    description: 'Active Directory Authority URL'
+    required: false
+    default: 'https://login.microsoftonline.com'
 branding:
   color: 'green' # optional, decorates the entry in the GitHub Marketplace
 runs:

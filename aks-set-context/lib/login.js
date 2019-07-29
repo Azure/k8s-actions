@@ -16,6 +16,7 @@ const client_1 = require("./client");
 const querystring = require("querystring");
 function getAzureAccessToken() {
     let creds = core.getInput('creds', { required: true });
+    let authorityUrl = core.getInput('activeDirectoryAuthorityUrl', { required: true });
     let credsObject;
     try {
         credsObject = JSON.parse(creds);
@@ -32,7 +33,7 @@ function getAzureAccessToken() {
     return new Promise((resolve, reject) => {
         let webRequest = new client_1.WebRequest();
         webRequest.method = "POST";
-        webRequest.uri = `https://login.microsoftonline.com/${tenantId}/oauth2/token/`;
+        webRequest.uri = `${authorityUrl}/${tenantId}/oauth2/token/`;
         webRequest.body = querystring.stringify({
             resource: 'https://management.azure.com',
             client_id: servicePrincipalId,
@@ -64,10 +65,11 @@ function getAKSKubeconfig(azureSessionToken) {
     let subscriptionId = core.getInput('subscriptionId', { required: true });
     let resourceGroupName = core.getInput('resourceGroupName', { required: true });
     let clusterName = core.getInput('clusterName', { required: true });
+    let cloudEnvironmentUrl = core.getInput('cloudEnvironmentUrl', { required: true });
     return new Promise((resolve, reject) => {
         var webRequest = new client_1.WebRequest();
         webRequest.method = 'GET';
-        webRequest.uri = `https://management.azure.com/subscriptions/${subscriptionId}/resourceGroups/${resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/${clusterName}/accessProfiles/clusterAdmin?api-version=2017-08-31`;
+        webRequest.uri = `${cloudEnvironmentUrl}/subscriptions/${subscriptionId}/resourceGroups/${resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/${clusterName}/accessProfiles/clusterAdmin?api-version=2017-08-31`;
         webRequest.headers = {
             'Authorization': 'Bearer ' + azureSessionToken,
             'Content-Type': 'application/json; charset=utf-8'
