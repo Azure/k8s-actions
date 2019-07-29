@@ -1,7 +1,7 @@
 # Usage
 
 ```yaml
-- uses: azure/actions/docker-login@master
+- uses: azure/actions/k8s-docker-login@master
   with:
     username: '<username>'
     password: '<password>'
