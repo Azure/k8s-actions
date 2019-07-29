@@ -59,6 +59,7 @@ function createSecret() {
         if (code != 0) {
             throw new Error('Secret create failed.');
         }
+        core.setOutput('secret-name', secretName);
     });
 }
 function deleteSecret(namespace, secretName) {
@@ -95,7 +96,7 @@ function getGenericSecretArguments(secretName) {
 }
 function checkClusterContext() {
     if (!process.env["KUBECONFIG"]) {
-        throw new Error('Cluster context not set. Use k8ssetcontext action to set cluster context');
+        throw new Error('Cluster context not set. Use k8s-set-context/aks-set-context action to set cluster context');
     }
 }
 function run() {

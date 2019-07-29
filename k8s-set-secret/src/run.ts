@@ -58,6 +58,7 @@ async function createSecret() {
     if (code != 0) {
         throw new Error('Secret create failed.')
     }
+    core.setOutput('secret-name', secretName);
 }
 
 async function deleteSecret(namespace: string, secretName: string) {
@@ -101,7 +102,7 @@ function getGenericSecretArguments(secretName: string): string[] {
 
 function checkClusterContext() {
     if (!process.env["KUBECONFIG"]) {
-        throw new Error('Cluster context not set. Use k8ssetcontext action to set cluster context');
+        throw new Error('Cluster context not set. Use k8s-set-context/aks-set-context action to set cluster context');
     }
 }
 
