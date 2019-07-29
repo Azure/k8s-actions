@@ -1,0 +1,30 @@
+name: 'Kubernetes set context'
+description: 'Login kubernetes'
+inputs: 
+  creds:
+    description: 'Azure credentials i.e. output of az ad sp create-for-rback'
+  subscriptionId:
+    description: 'Subscription ID'
+    required: false
+    default: ''
+  resourceGroupName:
+    description: 'Resource Group Name'
+    required: false
+    default: ''
+  clusterName:
+    description: 'AKS Cluster Name'
+    required: false
+    default: ''
+  cloudEnvironmentUrl:
+    description: 'Cloud Environment URL'
+    required: false
+    default: 'https://management.azure.com'
+  activeDirectoryAuthorityUrl: 
+    description: 'Active Directory Authority URL'
+    required: false
+    default: 'https://login.microsoftonline.com'
+branding:
+  color: 'green' # optional, decorates the entry in the GitHub Marketplace
+runs:
+  using: 'node'
+  main: 'lib/login.js'
