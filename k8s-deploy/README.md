@@ -1,7 +1,7 @@
 # Usage
 
 ```yaml
-- uses: azure/actions/k8s-deploy@master
+- uses: azure/k8s-actions/k8s-deploy@master
   with:
     aks-name: 'contoso-dev'
     aks-resource-group: 'contoso-dev-rg'
