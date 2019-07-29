@@ -1,0 +1,30 @@
+name: 'Kubernetes set context'
+description: 'Kubernetes set context'
+inputs: 
+  kubeconfig:
+    description: 'Kubernetes Config'
+    required: false
+    default: ''
+  context:
+    description: 'If your kubeconfig has multiple contexts, use this field to use a specific context, otherwise the default one would be chosen'
+    required: false
+    default: ''
+
+  clusterUrl:
+    description: 'Cluster Url'
+    required: false
+    default: ''
+  certificate:
+    description: 'Certificate for connection to the cluster'
+    required: false
+    default: ''
+  token:
+    description: 'Service account token'
+    required: false
+    default: ''
+  
+branding:
+  color: 'green' # optional, decorates the entry in the GitHub Marketplace
+runs:
+  using: 'node'
+  main: 'lib/login.js'
