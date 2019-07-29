@@ -1,0 +1,17 @@
+{
+    "name": "actions",
+    "version": "0.0.0",
+    "description": "Node modules for azure actions",
+    "author": "Deepak Sattiraju",
+    "license": "MIT",
+    "dependencies": {
+        "@actions/tool-cache": "file:./action-modules/actions-tool-cache-0.0.0.tgz",
+        "@actions/io": "file:./action-modules/actions-io-0.0.0.tgz",
+        "@actions/core": "file:./action-modules/actions-core-0.0.0.tgz",
+        "@actions/exec": "file:./action-modules/actions-exec-0.0.0.tgz",
+        "js-yaml": "3.13.1"
+    },
+    "devDependencies": {
+        "@types/node": "^12.0.10"
+    }
+}
