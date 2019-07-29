@@ -1,0 +1,38 @@
+name: 'Create secret in Kubernetes cluster'
+description: 'Create a generic secret or docker-registry secret in Kubernetes cluster'
+inputs: 
+  # Only namespace details are required. This action assumes K8s set context action has run earlier
+  namespace:
+    description: 'Choose the target Kubernetes namespace. If the namespace is not provided, the commands will run in the default namespace.'
+    required: false
+  container-registry-url:
+    description: 'Container registry url'
+    required: false
+  container-registry-username:
+    description: 'Container registry username'
+    required: false
+  container-registry-password:
+    description: 'Container registry password'
+    required: false
+  container-registry-email:
+    description: 'Container registry email'
+    required: false    
+  secret-type:
+    description: 'Type of Kubernetes secret. For example, docker-registry or generic'
+    required: true
+    default: 'docker-registry'
+  secret-name:
+    description: 'Name of the secret. You can use this secret name in the Kubernetes YAML configuration file.'
+    required: true
+  arguments:
+    description: 'Specify keys and literal values to insert in generic type secret.For example, --from-literal=key1=value1 --from-literal=key2="top secret".'
+    required: false
+outputs:
+  secret-name:
+    description: 'Secret name'
+branding:
+  icon: 'k8s.svg' # vector art to display in the GitHub Marketplace
+  color: 'blue' # optional, decorates the entry in the GitHub Marketplace
+runs:
+  using: 'node'
+  main: 'lib/run.js'
