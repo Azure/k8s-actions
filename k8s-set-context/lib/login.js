@@ -71,14 +71,14 @@ function getKubectlPath() {
 }
 function setContext() {
     return __awaiter(this, void 0, void 0, function* () {
-        const kubectlPath = yield getKubectlPath();
         let context = core.getInput('context');
         if (context) {
-            const toolRunner = new toolrunner_1.ToolRunner(kubectlPath, ['config', 'use-context', context]);
+            const kubectlPath = yield getKubectlPath();
+            let toolRunner = new toolrunner_1.ToolRunner(kubectlPath, ['config', 'use-context', context]);
+            yield toolRunner.exec();
+            toolRunner = new toolrunner_1.ToolRunner(kubectlPath, ['config', 'current-context']);
             yield toolRunner.exec();
         }
-        const toolRunner = new toolrunner_1.ToolRunner(kubectlPath, ['config', 'current-context']);
-        yield toolRunner.exec();
     });
 }
 function run() {

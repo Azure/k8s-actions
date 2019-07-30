@@ -1,5 +1,6 @@
 import * as toolCache from '@actions/tool-cache';
 import * as core from '@actions/core';
+import * as io from '@actions/io';
 import { ToolRunner } from "@actions/exec/lib/toolrunner";
 
 import * as path from 'path';
@@ -10,12 +11,27 @@ import { getExecutableExtension, isEqual, getCurrentTime } from "./utils";
 import { isWorkloadEntity, updateContainerImagesInManifestFiles, updateImagePullSecrets } from "./kubernetes-utils";
 import { downloadKubectl, getStableKubectlVersion } from "./kubectl-util";
 
-const allVersions = toolCache.findAllVersions('kubectl');
-let kubectlPath = allVersions.length > 0 ? toolCache.find('kubectl', allVersions[0]) : '';
-if (!kubectlPath && !core.getInput('kubectl-version')) {
-    core.setFailed('Kubectl is not installed, either add install-kubectl action or provide "kubectl-version" input to download kubectl');
+let kubectlPath = "";
+
+async function setKubectlPath() {
+    if (core.getInput('kubectl-version')) {
+        const version = core.getInput('kubect-version');
+        kubectlPath = toolCache.find('kubectl', version);
+        if (!kubectlPath) {
+            await installKubectl(version);
+        }
+    } else {
+        kubectlPath = await io.which('kubectl', false);
+        if (!kubectlPath) {
+            const allVersions = toolCache.findAllVersions('kubectl');
+            kubectlPath = allVersions.length > 0 ? toolCache.find('kubectl', allVersions[0]) : '';
+            if (!kubectlPath) {
+                throw new Error('Kubectl is not installed, either add install-kubectl action or provide "kubectl-version" input to download kubectl');
+            }
+            kubectlPath = path.join(kubectlPath, `kubectl${getExecutableExtension()}`);
+        }
+    }
 }
-kubectlPath = path.join(kubectlPath, `kubectl${getExecutableExtension()}`);
 
 async function deploy(manifests: string[], namespace: string) {
     if (manifests) {
@@ -76,14 +92,11 @@ function updateManifests(manifests: string[], imagesToOverride: string, imagepul
     return writeObjectsToFile(newObjectsList);
 }
 
-async function installKubectlIfRequired() {
-    let kubectlVersion = core.getInput('kubectl-version');
-    if (kubectlVersion) {
-        if (isEqual(kubectlVersion, 'latest')) {
-            kubectlVersion = await getStableKubectlVersion();
-        }
-        kubectlPath = await downloadKubectl(kubectlVersion);
+async function installKubectl(version: string) {
+    if (isEqual(version, 'latest')) {
+        version = await getStableKubectlVersion();
     }
+    kubectlPath = await downloadKubectl(version);
 }
 
 function checkClusterContext() {
@@ -94,7 +107,7 @@ function checkClusterContext() {
 
 async function run() {
     checkClusterContext();
-    await installKubectlIfRequired();
+    await setKubectlPath();
     let manifestsInput = core.getInput('manifests');
     if (!manifestsInput) {
         core.setFailed('No manifests supplied to deploy');

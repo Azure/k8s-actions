@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const toolCache = require("@actions/tool-cache");
 const core = require("@actions/core");
+const io = require("@actions/io");
 const toolrunner_1 = require("@actions/exec/lib/toolrunner");
 const path = require("path");
 const fs = require("fs");
@@ -17,12 +18,29 @@ const yaml = require("js-yaml");
 const utils_1 = require("./utils");
 const kubernetes_utils_1 = require("./kubernetes-utils");
 const kubectl_util_1 = require("./kubectl-util");
-const allVersions = toolCache.findAllVersions('kubectl');
-let kubectlPath = allVersions.length > 0 ? toolCache.find('kubectl', allVersions[0]) : '';
-if (!kubectlPath && !core.getInput('kubectl-version')) {
-    core.setFailed('Kubectl is not installed, either add install-kubectl action or provide "kubectl-version" input to download kubectl');
+let kubectlPath = "";
+function setKubectlPath() {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (core.getInput('kubectl-version')) {
+            const version = core.getInput('kubect-version');
+            kubectlPath = toolCache.find('kubectl', version);
+            if (!kubectlPath) {
+                yield installKubectl(version);
+            }
+        }
+        else {
+            kubectlPath = yield io.which('kubectl', false);
+            if (!kubectlPath) {
+                const allVersions = toolCache.findAllVersions('kubectl');
+                kubectlPath = allVersions.length > 0 ? toolCache.find('kubectl', allVersions[0]) : '';
+                if (!kubectlPath) {
+                    throw new Error('Kubectl is not installed, either add install-kubectl action or provide "kubectl-version" input to download kubectl');
+                }
+                kubectlPath = path.join(kubectlPath, `kubectl${utils_1.getExecutableExtension()}`);
+            }
+        }
+    });
 }
-kubectlPath = path.join(kubectlPath, `kubectl${utils_1.getExecutableExtension()}`);
 function deploy(manifests, namespace) {
     return __awaiter(this, void 0, void 0, function* () {
         if (manifests) {
@@ -78,15 +96,12 @@ function updateManifests(manifests, imagesToOverride, imagepullsecrets) {
     });
     return writeObjectsToFile(newObjectsList);
 }
-function installKubectlIfRequired() {
+function installKubectl(version) {
     return __awaiter(this, void 0, void 0, function* () {
-        let kubectlVersion = core.getInput('kubectl-version');
-        if (kubectlVersion) {
-            if (utils_1.isEqual(kubectlVersion, 'latest')) {
-                kubectlVersion = yield kubectl_util_1.getStableKubectlVersion();
-            }
-            kubectlPath = yield kubectl_util_1.downloadKubectl(kubectlVersion);
+        if (utils_1.isEqual(version, 'latest')) {
+            version = yield kubectl_util_1.getStableKubectlVersion();
         }
+        kubectlPath = yield kubectl_util_1.downloadKubectl(version);
     });
 }
 function checkClusterContext() {
@@ -97,7 +112,7 @@ function checkClusterContext() {
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         checkClusterContext();
-        yield installKubectlIfRequired();
+        yield setKubectlPath();
         let manifestsInput = core.getInput('manifests');
         if (!manifestsInput) {
             core.setFailed('No manifests supplied to deploy');
