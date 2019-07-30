@@ -13,10 +13,6 @@ inputs:
     description: 'Login Server'
     required: true
     default: 'index.docker.io'
-  email:
-    description: 'Email'
-    required: true
-    default: ''
 branding:
   color: 'green'
 runs:

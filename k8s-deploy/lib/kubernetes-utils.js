@@ -36,8 +36,7 @@ function setImagePullSecrets(inputObject, newImagePullSecrets) {
     }
     if (utils_1.isEqual(inputObject.kind, 'pod')) {
         if (inputObject
-            && inputObject.spec
-            && inputObject.spec.imagePullSecrets) {
+            && inputObject.spec) {
             if (newImagePullSecrets.length > 0) {
                 inputObject.spec.imagePullSecrets = newImagePullSecrets;
             }
@@ -52,8 +51,7 @@ function setImagePullSecrets(inputObject, newImagePullSecrets) {
             && inputObject.spec.jobTemplate
             && inputObject.spec.jobTemplate.spec
             && inputObject.spec.jobTemplate.spec.template
-            && inputObject.spec.jobTemplate.spec.template.spec
-            && inputObject.spec.jobTemplate.spec.template.spec.imagePullSecrets) {
+            && inputObject.spec.jobTemplate.spec.template.spec) {
             if (newImagePullSecrets.length > 0) {
                 inputObject.spec.jobTemplate.spec.template.spec.imagePullSecrets = newImagePullSecrets;
             }
@@ -66,8 +64,7 @@ function setImagePullSecrets(inputObject, newImagePullSecrets) {
         if (inputObject
             && inputObject.spec
             && inputObject.spec.template
-            && inputObject.spec.template.spec
-            && inputObject.spec.template.spec.imagePullSecrets) {
+            && inputObject.spec.template.spec) {
             if (newImagePullSecrets.length > 0) {
                 inputObject.spec.template.spec.imagePullSecrets = newImagePullSecrets;
             }
