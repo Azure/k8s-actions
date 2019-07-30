@@ -13,7 +13,7 @@ function getKubeconfig(): string {
         core.debug("Setting context using kubeconfig");
         return kubeconfig;
     }
-    const clusterUrl = core.getInput('clusterUrl', { required: true });
+    const clusterUrl = core.getInput('cluster-url', { required: true });
     core.debug("Found clusterUrl, creating kubeconfig using certificate and token");
     let certificate = core.getInput('certificate');
     let token = Buffer.from(core.getInput('token'), 'base64').toString();

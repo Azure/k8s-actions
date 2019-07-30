@@ -7,7 +7,7 @@ import * as querystring from 'querystring';
 
 function getAzureAccessToken(): Promise<string> {
     let creds = core.getInput('creds', { required: true });
-    let authorityUrl = core.getInput('activeDirectoryAuthorityUrl', { required: true });
+    let authorityUrl = core.getInput('active-directory-authority-url', { required: true });
     let credsObject;
     try {
         credsObject = JSON.parse(creds);
@@ -59,10 +59,10 @@ function getAzureAccessToken(): Promise<string> {
 }
 
 function getAKSKubeconfig(azureSessionToken: string): Promise<string> {
-    let subscriptionId = core.getInput('subscriptionId', { required: true });
-    let resourceGroupName = core.getInput('resourceGroupName', { required: true });
-    let clusterName = core.getInput('clusterName', { required: true });
-    let cloudEnvironmentUrl = core.getInput('cloudEnvironmentUrl', { required: true });
+    let subscriptionId = core.getInput('subscription-id', { required: true });
+    let resourceGroupName = core.getInput('resource-group', { required: true });
+    let clusterName = core.getInput('cluster-name', { required: true });
+    let cloudEnvironmentUrl = core.getInput('cloud-environment-url', { required: true });
     return new Promise<string>((resolve, reject) => {
         var webRequest = new WebRequest();
         webRequest.method = 'GET';

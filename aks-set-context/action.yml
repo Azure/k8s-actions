@@ -1,25 +1,25 @@
-name: 'Kubernetes set context'
-description: 'Login kubernetes'
+name: 'AKS set context'
+description: 'AKS set context'
 inputs: 
   creds:
-    description: 'Azure credentials i.e. output of az ad sp create-for-rback'
-  subscriptionId:
+    description: 'Azure credentials i.e. output of az ad sp create-for-rbac'
+  subscription-id:
     description: 'Subscription ID'
     required: false
     default: ''
-  resourceGroupName:
+  resource-group:
     description: 'Resource Group Name'
     required: false
     default: ''
-  clusterName:
+  cluster-name:
     description: 'AKS Cluster Name'
     required: false
     default: ''
-  cloudEnvironmentUrl:
+  cloud-environment-url:
     description: 'Cloud Environment URL'
     required: false
     default: 'https://management.azure.com'
-  activeDirectoryAuthorityUrl: 
+  active-directory-authority-url: 
     description: 'Active Directory Authority URL'
     required: false
     default: 'https://login.microsoftonline.com'
