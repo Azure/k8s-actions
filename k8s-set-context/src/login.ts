@@ -64,14 +64,14 @@ async function getKubectlPath() {
 }
 
 async function setContext() {
-    const kubectlPath = await getKubectlPath();
     let context = core.getInput('context');
     if (context) {
-        const toolRunner = new ToolRunner(kubectlPath, ['config', 'use-context', context]);
+        const kubectlPath = await getKubectlPath();
+        let toolRunner = new ToolRunner(kubectlPath, ['config', 'use-context', context]);
+        await toolRunner.exec();
+        toolRunner = new ToolRunner(kubectlPath, ['config', 'current-context']);
         await toolRunner.exec();
     }
-    const toolRunner = new ToolRunner(kubectlPath, ['config', 'current-context']);
-    await toolRunner.exec();
 }
 
 async function run() {
