@@ -10,7 +10,7 @@ inputs:
     required: false
     default: ''
 
-  clusterUrl:
+  cluster-url:
     description: 'Cluster Url'
     required: false
     default: ''

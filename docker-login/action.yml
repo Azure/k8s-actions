@@ -9,7 +9,7 @@ inputs:
     description: 'Docker password'
     required: true
     default: ''
-  loginServer:
+  login-server:
     description: 'Login Server'
     required: true
     default: 'index.docker.io'

@@ -17,7 +17,7 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         let username = core.getInput('username', { required: true });
         let password = core.getInput('password', { required: true });
-        let loginServer = core.getInput('loginServer', { required: true });
+        let loginServer = core.getInput('login-server', { required: true });
         let authenticationToken = new Buffer(`${username}:${password}`).toString('base64');
         let config = {
             "auths": {
