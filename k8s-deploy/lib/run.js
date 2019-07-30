@@ -25,7 +25,7 @@ function setKubectlPath() {
             const version = core.getInput('kubect-version');
             kubectlPath = toolCache.find('kubectl', version);
             if (!kubectlPath) {
-                yield installKubectl(version);
+                kubectlPath = yield installKubectl(version);
             }
         }
         else {
@@ -101,7 +101,7 @@ function installKubectl(version) {
         if (utils_1.isEqual(version, 'latest')) {
             version = yield kubectl_util_1.getStableKubectlVersion();
         }
-        kubectlPath = yield kubectl_util_1.downloadKubectl(version);
+        return yield kubectl_util_1.downloadKubectl(version);
     });
 }
 function checkClusterContext() {

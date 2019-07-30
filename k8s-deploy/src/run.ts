@@ -18,7 +18,7 @@ async function setKubectlPath() {
         const version = core.getInput('kubect-version');
         kubectlPath = toolCache.find('kubectl', version);
         if (!kubectlPath) {
-            await installKubectl(version);
+            kubectlPath = await installKubectl(version);
         }
     } else {
         kubectlPath = await io.which('kubectl', false);
@@ -96,7 +96,7 @@ async function installKubectl(version: string) {
     if (isEqual(version, 'latest')) {
         version = await getStableKubectlVersion();
     }
-    kubectlPath = await downloadKubectl(version);
+    return await downloadKubectl(version);
 }
 
 function checkClusterContext() {
