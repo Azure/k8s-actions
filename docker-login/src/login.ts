@@ -8,14 +8,12 @@ async function run() {
     let username = core.getInput('username', { required: true });
     let password = core.getInput('password', { required: true });
     let loginServer = core.getInput('loginServer', { required: true });
-    let email = core.getInput('email', { required: true });
     let authenticationToken = new Buffer(`${username}:${password}`).toString('base64');
 
     let config = {
         "auths": {
             [loginServer]: {
-                auth: authenticationToken,
-                email: email
+                auth: authenticationToken
             }
         }
     }
