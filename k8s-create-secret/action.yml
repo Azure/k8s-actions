@@ -34,5 +34,5 @@ branding:
   icon: 'k8s.svg' # vector art to display in the GitHub Marketplace
   color: 'blue' # optional, decorates the entry in the GitHub Marketplace
 runs:
-  using: 'node'
+  using: 'node12'
   main: 'lib/run.js'
