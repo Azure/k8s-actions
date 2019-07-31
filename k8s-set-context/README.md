@@ -43,7 +43,7 @@ kubectl config view --minify -o jsonpath={.clusters[0].cluster.server}
 #### k8s-secret: Run following sequential commands to get the secret value:
 Get service account secret names by running
 ```sh
-kubectl get serviceAccounts <service-account-name> -n <namespace> -o=jsonpath={.secrets[*].name}
+kubectl get sa <service-account-name> -n <namespace> -o=jsonpath={.secrets[*].name}
 ```
 
 Use the output of the above command 
