@@ -10,15 +10,11 @@ inputs:
     required: false
     default: ''
 
-  cluster-url:
+  k8s-url:
     description: 'Cluster Url'
     required: false
     default: ''
-  certificate:
-    description: 'Certificate for connection to the cluster'
-    required: false
-    default: ''
-  token:
+  k8s-secret:
     description: 'Service account token'
     required: false
     default: ''
