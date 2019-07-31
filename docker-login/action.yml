@@ -16,5 +16,5 @@ inputs:
 branding:
   color: 'green'
 runs:
-  using: 'node'
+  using: 'node12'
   main: 'lib/login.js'
