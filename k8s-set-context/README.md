@@ -35,14 +35,18 @@ Please refer to https://kubernetes.io/docs/concepts/configuration/organize-clust
 
 
 ## Steps to get Service account: 
-```sh
-# k8s-url: Run in your local shell to get server K8s URL
-kubectl config view --minify -o jsonpath={.clusters[0].cluster.server}
 
-# k8s-secret: Run following sequential commands to get the secret value:
+#### k8s-url: Run in your local shell to get server K8s URL
+```sh
+kubectl config view --minify -o jsonpath={.clusters[0].cluster.server}
+```
+#### k8s-secret: Run following sequential commands to get the secret value:
 Get service account secret names by running
+```sh
 kubectl get serviceAccounts <service-account-name> -n <namespace> -o=jsonpath={.secrets[*].name}
+```
 
 Use the output of the above command 
+```sh
 kubectl get secret <service-account-secret-name> -n <namespace> -o json
 ```
