@@ -71,7 +71,7 @@ async function run() {
     }
     let cachedPath = await downloadKubectl(version);
     console.log(`Kubectl tool version: '${version}' has been cached at ${cachedPath}`);
-    core.setOutput('kubectlPath', cachedPath);
+    core.setOutput('kubectl-path', cachedPath);
 }
 
 run().catch(core.setFailed);
