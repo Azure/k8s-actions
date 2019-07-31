@@ -1,18 +1,17 @@
 # Usage
-
+### AKS set context. Used for setting the target AKS cluster context which will be used by other actions like azure/k8s-actions/k8s-deploy or azure/k8s-actions/k8s-create-secret 
 ```yaml
 uses: azure/k8s-actions/aks-set-context@master
     with:
         creds: '<login to az, paste the output of `az ad sp create-for-rbac --sdk-auth` here>'
-        subscriptionId: '<subscription id>'
         resourceGroupName: '<resource group name>'
         clusterName: '<cluster name>'
     id: login
 ```
 
-## creds object example
+## Creds object example
 Run `az ad sp create-for-rbac --sdk-auth` to generate the below object
-
+For more details refer to https://docs.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest#az-ad-sp-create-for-rbac
 ```json
 {
   "clientId": "<client id>",

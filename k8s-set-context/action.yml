@@ -1,6 +1,7 @@
 name: 'Kubernetes set context'
 description: 'Kubernetes set context'
 inputs: 
+# Used for setting the target K8s cluster context which will be used by other actions like azure/k8s-actions/k8s-deploy or azure/k8s-actions/k8s-create-secret
   kubeconfig:
     description: 'Kubernetes Config'
     required: false

@@ -1,5 +1,5 @@
 name: 'AKS set context'
-description: 'AKS set context'
+description: 'AKS set context. Used for setting the target AKS cluster context which will be used by other actions like azure/k8s-actions/k8s-deploy or azure/k8s-actions/k8s-create-secret '
 inputs: 
   creds:
     description: 'Azure credentials i.e. output of `az ad sp create-for-rbac --sdk-auth`'
