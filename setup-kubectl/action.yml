@@ -6,7 +6,7 @@ inputs:
     required: true
     default: 'latest'
 outputs:
-  kubectlPath:
+  kubectl-path:
     description: 'Path to the cached kubectl binary'
 branding:
   color: 'blue'
