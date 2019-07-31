@@ -1,7 +1,7 @@
 name: 'Create secret in Kubernetes cluster'
 description: 'Create a generic secret or docker-registry secret in Kubernetes cluster'
 inputs: 
-  # Only namespace details are required. This action assumes K8s set context action has run earlier
+  # Please ensure you have used either azure/k8s-actions/aks-set-context or azure/k8s-actions/k8s-set-context in the workflow before this action
   namespace:
     description: 'Choose the target Kubernetes namespace. If the namespace is not provided, the commands will run in the default namespace.'
     required: false
