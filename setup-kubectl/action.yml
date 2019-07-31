@@ -11,5 +11,5 @@ outputs:
 branding:
   color: 'blue'
 runs:
-  using: 'node'
+  using: 'node12'
   main: 'lib/run.js'
