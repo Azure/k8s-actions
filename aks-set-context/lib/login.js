@@ -14,20 +14,8 @@ const path = require("path");
 const fs = require("fs");
 const client_1 = require("./client");
 const querystring = require("querystring");
-function getAzureAccessToken() {
-    let creds = core.getInput('creds', { required: true });
-    let authorityUrl = core.getInput('active-directory-authority-url', { required: true });
-    let credsObject;
-    try {
-        credsObject = JSON.parse(creds);
-    }
-    catch (ex) {
-        throw new Error('Credentials object is not a valid JSON');
-    }
-    let servicePrincipalId = credsObject["appId"];
-    let servicePrincipalKey = credsObject["password"];
-    let tenantId = credsObject["tenant"];
-    if (!servicePrincipalId || !servicePrincipalKey || !tenantId) {
+function getAzureAccessToken(servicePrincipalId, servicePrincipalKey, tenantId, authorityUrl) {
+    if (!servicePrincipalId || !servicePrincipalKey || !tenantId || !authorityUrl) {
         throw new Error("Not all values are present in the creds object. Ensure appId, password and tenant are supplied");
     }
     return new Promise((resolve, reject) => {
@@ -61,15 +49,13 @@ function getAzureAccessToken() {
         });
     });
 }
-function getAKSKubeconfig(azureSessionToken) {
-    let subscriptionId = core.getInput('subscription-id', { required: true });
+function getAKSKubeconfig(azureSessionToken, subscriptionId, managementEndpointUrl) {
     let resourceGroupName = core.getInput('resource-group', { required: true });
     let clusterName = core.getInput('cluster-name', { required: true });
-    let cloudEnvironmentUrl = core.getInput('cloud-environment-url', { required: true });
     return new Promise((resolve, reject) => {
         var webRequest = new client_1.WebRequest();
         webRequest.method = 'GET';
-        webRequest.uri = `${cloudEnvironmentUrl}/subscriptions/${subscriptionId}/resourceGroups/${resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/${clusterName}/accessProfiles/clusterAdmin?api-version=2017-08-31`;
+        webRequest.uri = `${managementEndpointUrl}/subscriptions/${subscriptionId}/resourceGroups/${resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/${clusterName}/accessProfiles/clusterAdmin?api-version=2017-08-31`;
         webRequest.headers = {
             'Authorization': 'Bearer ' + azureSessionToken,
             'Content-Type': 'application/json; charset=utf-8'
@@ -83,8 +69,22 @@ function getAKSKubeconfig(azureSessionToken) {
 }
 function getKubeconfig() {
     return __awaiter(this, void 0, void 0, function* () {
-        let azureSessionToken = yield getAzureAccessToken();
-        let kubeconfig = yield getAKSKubeconfig(azureSessionToken);
+        let creds = core.getInput('creds', { required: true });
+        let credsObject;
+        try {
+            credsObject = JSON.parse(creds);
+        }
+        catch (ex) {
+            throw new Error('Credentials object is not a valid JSON');
+        }
+        let servicePrincipalId = credsObject["clientId"];
+        let servicePrincipalKey = credsObject["clientSecret"];
+        let tenantId = credsObject["tenantId"];
+        let authorityUrl = credsObject["activeDirectoryEndpointUrl"];
+        let managementEndpointUrl = credsObject["resourceManagerEndpointUrl"];
+        let subscriptionId = credsObject["subscriptionId"];
+        let azureSessionToken = yield getAzureAccessToken(servicePrincipalId, servicePrincipalKey, tenantId, authorityUrl);
+        let kubeconfig = yield getAKSKubeconfig(azureSessionToken, subscriptionId, managementEndpointUrl);
         return kubeconfig;
     });
 }
