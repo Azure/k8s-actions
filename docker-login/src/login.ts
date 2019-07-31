@@ -18,7 +18,7 @@ async function run() {
         }
     }
 
-    const runnerTempDirectory = process.env['RUNNER_TEMPDIRECTORY']; // Using process.env until the core libs are updated
+    const runnerTempDirectory = process.env['RUNNER_TEMP']; // Using process.env until the core libs are updated
     const dirPath = path.join(runnerTempDirectory, `docker_login_${Date.now()}`);
     await io.mkdirP(dirPath);
     const dockerConfigPath = path.join(dirPath, `config.json`);

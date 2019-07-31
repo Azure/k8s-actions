@@ -54,7 +54,7 @@ function deploy(manifests, namespace) {
 }
 function getManifestFileName(kind, name) {
     const filePath = kind + '_' + name + '_' + utils_1.getCurrentTime().toString();
-    const tempDirectory = process.env['RUNNER_TEMPDIRECTORY'];
+    const tempDirectory = process.env['RUNNER_TEMP'];
     const fileName = path.join(tempDirectory, path.basename(filePath));
     return fileName;
 }

@@ -91,7 +91,7 @@ function getKubeconfig() {
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         let kubeconfig = yield getKubeconfig();
-        const runnerTempDirectory = process.env['RUNNER_TEMPDIRECTORY']; // Using process.env until the core libs are updated
+        const runnerTempDirectory = process.env['RUNNER_TEMP']; // Using process.env until the core libs are updated
         const kubeconfigPath = path.join(runnerTempDirectory, `kubeconfig_${Date.now()}`);
         core.debug(`Writing kubeconfig contents to ${kubeconfigPath}`);
         fs.writeFileSync(kubeconfigPath, kubeconfig);

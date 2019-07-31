@@ -45,7 +45,7 @@ async function deploy(manifests: string[], namespace: string) {
 
 function getManifestFileName(kind: string, name: string) {
     const filePath = kind + '_' + name + '_' + getCurrentTime().toString();
-    const tempDirectory = process.env['RUNNER_TEMPDIRECTORY'];
+    const tempDirectory = process.env['RUNNER_TEMP'];
     const fileName = path.join(tempDirectory, path.basename(filePath));
     return fileName;
 }
