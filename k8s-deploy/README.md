@@ -1,6 +1,19 @@
-# Usage
-## Deploy manifest action for Kubernetes
-### Assumes that the deployment target K8s cluster context was set earlier in the workflow by using either azure/k8s-actions/aks-set-context or azure/k8s-actions/k8s-set-context
+# Deploy manifest action for Kubernetes
+Use this action to bake and deploy manifests to Kubernetes clusters.
+
+Assumes that the deployment target K8s cluster context was set earlier in the workflow by using either [`azure/k8s-actions/aks-set-context`](https://github.com/Azure/k8s-actions/tree/master/aks-set-context) or [`azure/k8s-actions/k8s-set-context`](https://github.com/Azure/k8s-actions/tree/master/k8s-set-context)
+
+#### Artifact substitution
+The deploy action takes as input a list of container images which can be specified along with their tags or digests. The same is substituted into the non-templatized version of manifest files before application to the cluster to ensure that the right version of the image is pulled by the cluster nodes.
+
+#### Manifest stability
+Rollout status is checked for the Kubernetes objects deployed. This is done to incorporate stability checks while computing the task status as success/failure.
+
+#### Secret handling 
+ The manifest files specfied as inputs are augmented with appropriate imagePullSecrets before deploying to the cluster.
+
+
+
 ```yaml
 - uses: azure/k8s-actions/k8s-deploy@master
   with:

@@ -1,4 +1,4 @@
-# AKS set context
+# Azure Kubernetes Service set context
 
 Used for setting the target AKS cluster context which will be used by other actions like [`azure/k8s-actions/k8s-deploy`](https://github.com/Azure/k8s-actions/tree/master/k8s-deploy), [`azure/k8s-actions/k8s-create-secret`](https://github.com/Azure/k8s-actions/tree/master/k8s-create-secret) etc. or run any kubectl commands.
 

@@ -1,5 +1,4 @@
-# Usage
-## Log in to a container registry
+# Log in to a container registry
 ```yaml
 - uses: azure/actions/k8s-docker-login@master
   with:
