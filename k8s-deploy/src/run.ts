@@ -43,6 +43,31 @@ async function deploy(manifests: string[], namespace: string) {
     }
 }
 
+async function checkRolloutStatus(name: string, kind: string, namespace: string) {
+    const toolrunner = new ToolRunner(kubectlPath, ['rollout', 'status', `${kind.trim()}/${name.trim()}`, `--namespace`, namespace]);
+    return toolrunner.exec();
+}
+
+async function checkManifestsStability(manifests: string[], namespace: string) {
+    manifests.forEach((manifest) => {
+        let content = fs.readFileSync(manifest).toString();
+        yaml.safeLoadAll(content, async function (inputObject: any) {
+            if (!!inputObject.kind && !!inputObject.metadata && !!inputObject.metadata.name) {
+                let kind: string = inputObject.kind;
+                switch (kind.toLowerCase()) {
+                    case 'deployment':
+                    case 'daemonset':
+                    case 'statefulset':
+                        await checkRolloutStatus(inputObject.metadata.name, kind, namespace);
+                        break;
+                    default:
+                        core.debug(`No rollout check for kind: ${inputObject.kind}`)
+                }
+            }
+        });
+    });
+}
+
 function getManifestFileName(kind: string, name: string) {
     const filePath = kind + '_' + name + '_' + getCurrentTime().toString();
     const tempDirectory = process.env['RUNNER_TEMP'];
@@ -124,6 +149,7 @@ async function run() {
         manifests = updateManifests(manifests, imagesToOverride, imagePullSecretsToAdd)
     }
     await deploy(manifests, namespace);
+    await checkManifestsStability(manifests, namespace);
 }
 
 run().catch(core.setFailed);
