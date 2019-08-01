@@ -52,6 +52,34 @@ function deploy(manifests, namespace) {
         }
     });
 }
+function checkRolloutStatus(name, kind, namespace) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const toolrunner = new toolrunner_1.ToolRunner(kubectlPath, ['rollout', 'status', `${kind.trim()}/${name.trim()}`, `--namespace`, namespace]);
+        return toolrunner.exec();
+    });
+}
+function checkManifestsStability(manifests, namespace) {
+    return __awaiter(this, void 0, void 0, function* () {
+        manifests.forEach((manifest) => {
+            let content = fs.readFileSync(manifest).toString();
+            yaml.safeLoadAll(content, function (inputObject) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    if (!!inputObject.kind && !!inputObject.metadata && !!inputObject.metadata.name) {
+                        let kind = inputObject.kind;
+                        switch (kind.toLowerCase()) {
+                            case 'deployment':
+                            case 'daemonset':
+                            case 'statefulset':
+                                yield checkRolloutStatus(inputObject.metadata.name, kind, namespace);
+                            default:
+                                core.debug(`No rollout check for kind: ${inputObject.kind}`);
+                        }
+                    }
+                });
+            });
+        });
+    });
+}
 function getManifestFileName(kind, name) {
     const filePath = kind + '_' + name + '_' + utils_1.getCurrentTime().toString();
     const tempDirectory = process.env['RUNNER_TEMP'];
@@ -128,6 +156,7 @@ function run() {
             manifests = updateManifests(manifests, imagesToOverride, imagePullSecretsToAdd);
         }
         yield deploy(manifests, namespace);
+        yield checkManifestsStability(manifests, namespace);
     });
 }
 run().catch(core.setFailed);
