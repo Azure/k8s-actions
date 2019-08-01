@@ -71,6 +71,7 @@ function checkManifestsStability(manifests, namespace) {
                             case 'daemonset':
                             case 'statefulset':
                                 yield checkRolloutStatus(inputObject.metadata.name, kind, namespace);
+                                break;
                             default:
                                 core.debug(`No rollout check for kind: ${inputObject.kind}`);
                         }

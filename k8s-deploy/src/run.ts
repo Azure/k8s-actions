@@ -59,6 +59,7 @@ async function checkManifestsStability(manifests: string[], namespace: string) {
                     case 'daemonset':
                     case 'statefulset':
                         await checkRolloutStatus(inputObject.metadata.name, kind, namespace);
+                        break;
                     default:
                         core.debug(`No rollout check for kind: ${inputObject.kind}`)
                 }
