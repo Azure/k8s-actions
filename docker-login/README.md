@@ -24,8 +24,6 @@ Use this GitHub Action to [log in to a private container registry](https://docs.
 ```
 
 ### Prerequisite
-Get the username and password of your container registry and create secrets for them. 
-
-For Azure Container registry refer to **admin [account document](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-authentication#admin-account)** for username and password.
+Get the username and password of your container registry and create secrets for them. For Azure Container registry refer to **admin [account document](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-authentication#admin-account)** for username and password.
 
 Now add the username and password as [a secret](https://developer.github.com/actions/managing-workflows/storing-secrets/) in the GitHub repository.
