@@ -14,7 +14,7 @@ Use this GitHub Action to [log in to a private container registry](https://docs.
 ```yaml
 - uses: azure/container-actions/docker-login@master
       with:
-        login-server: demoe.azurecr.io
+        login-server: contoso.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     
