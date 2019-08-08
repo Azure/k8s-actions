@@ -22,6 +22,8 @@ Use secret (https://developer.github.com/actions/managing-workflows/storing-secr
 
 PS: `kubeconfig` takes precedence (i.e. kubeconfig would be created using the value supplied in kubeconfig)
 
+Refer to the action metadata file for details about all the inputs https://github.com/Azure/k8s-set-context/blob/master/k8s-set-context/action.yml
+
 ## Steps to get Kubeconfig of a K8s cluster: 
 
 ### For AKS
