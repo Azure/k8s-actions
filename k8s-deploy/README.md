@@ -38,7 +38,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     
-    - uses: azure/k8s-actions/docker-login@master
+    - uses: azure/container-actions/docker-login@master
       with:
         login-server: contoso.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }}
@@ -84,7 +84,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     
-    - uses: azure/k8s-actions/docker-login@master
+    - uses: azure/container-actions/docker-login@master
       with:
         login-server: contoso.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }}
