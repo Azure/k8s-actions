@@ -11,7 +11,9 @@ uses: azure/k8s-actions/aks-set-context@master
     id: login
 ```
 
-## Creds object example
+#### Refer to action metadata file https://github.com/Azure/k8s-actions/blob/master/aks-set-context/action.yml
+
+## Creds example
 Run `az ad sp create-for-rbac --sdk-auth` to generate an Azure Active Directory service principals.
 For more details refer to: [az ad sp create-for-rbac](https://docs.microsoft.com/en-us/cli/azure/ad/sp?view=azure-cli-latest#az-ad-sp-create-for-rbac)
 
