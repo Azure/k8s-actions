@@ -1,6 +1,8 @@
 # Kubernetes Actions for GitHub
 
-A set of GitHub Actions for deploying to a Kubernetes cluster, including Azure Kubernetes service (AKS) and Kubernetes running on-premises and on public clouds.
+A set of GitHub Actions for deploying to a Kubernetes cluster, including [Azure Kubernetes service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/) and Kubernetes running on-premises and on public clouds.
+
+Get started today with a [free Azure account](https://azure.com/free/open-source)!
 
 The repository contains the following GitHub Actions:
 * [k8s-set-context](https://github.com/Azure/k8s-actions/tree/master/k8s-set-context): Used for setting the target K8s cluster context by providing kubeconfig or service account details
@@ -11,6 +13,7 @@ The repository contains the following GitHub Actions:
 * [docker-login](https://github.com/Azure/k8s-actions/tree/master/docker-login) : Actions to [log in to a private container registry](https://docs.docker.com/engine/reference/commandline/login/) such as [Azure Container registry](https://azure.microsoft.com/en-us/services/container-registry/). Once login is done, the next set of Actions in the workflow can perform tasks such as building, tagging and pushing containers.
 
 # Usage
+
 Usage information for individual actions can be found in their respective directories.
 
 For any credential like Azure Service Principal, Kubeconfig, add them as [secrets](https://developer.github.com/actions/managing-workflows/storing-secrets/) in the GitHub repository and then use them in the workflow.
