@@ -9,3 +9,4 @@ Acceptable values are latest or any semantic version string like 1.15.0. Use thi
     version: '<version>' # default is latest stable
   id: install
 ```
+Refer to the action metadata file for details about all the inputs https://github.com/Azure/k8s-actions/blob/master/setup-kubectl/action.yml
