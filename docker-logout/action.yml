@@ -1,0 +1,7 @@
+name: 'Docker Logout'
+description: 'Docker logout'
+branding:
+  color: 'green'
+runs:
+  using: 'node12'
+  main: 'lib/logout.js'
