@@ -5,8 +5,8 @@ Used for setting the target K8s cluster context which will be used by other acti
 ```yaml
 - uses: azure/actions/k8s-set-context@master
   with:
-    kubeconfig: '<your kubeconfig>'
-    context: '<context name>'  # chooses the current-context from kubeconfig if not provided
+    kubeconfig: '<your kubeconfig>'v# Use secret (https://developer.github.com/actions/managing-workflows/storing-secrets/)
+    context: '<context name>'  # Optional, uses the current-context from kubeconfig by default
   id: login
 ```
 
@@ -17,6 +17,9 @@ Used for setting the target K8s cluster context which will be used by other acti
     k8s-secret: '<service account token>' # token value from the result of the below script
   id: login
 ```
+
+Use secret (https://developer.github.com/actions/managing-workflows/storing-secrets/) in workflow for kubeconfig or k8s-values.
+
 PS: `kubeconfig` takes precedence (i.e. kubeconfig would be created using the value supplied in kubeconfig)
 
 ## Steps to get Kubeconfig of a K8s cluster: 
@@ -54,7 +57,7 @@ Use the output of the above command
 ```sh
 kubectl get secret <service-account-secret-name> -n <namespace> -o json
 ```
-## Set secret
+## Use secret
 Now add the values as [a secret](https://developer.github.com/actions/managing-workflows/storing-secrets/) in the GitHub repository. In the example below the secret name is `KUBE_CONFIG` and it can be used in the workflow by using the following syntax:
 ```yaml
  - uses: azure/k8s-actions/k8s-set-context@master
