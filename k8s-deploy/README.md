@@ -26,6 +26,52 @@ Rollout status is checked for the Kubernetes objects deployed. This is done to i
     kubectl-version: 'latest' # optional
 ```
 
+## End to end workflow for building container images and deploying to an Azure Kubernetes Service cluster
+
+```yaml
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    
+    - uses: azure/k8s-actions/docker-login@master
+      with:
+        login-server: contoso.azurecr.io
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+    
+    - run: |
+        docker build . -t contoso.azurecr.io/k8sdemo:${{ github.sha }}
+        docker push contoso.azurecr.io/k8sdemo:${{ github.sha }}
+      
+    # Set the target AKS cluster. 
+    - uses: azure/k8s-actions/aks-set-context@master
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        cluster-name: contoso
+        resource-group: contoso-rg
+        
+    - uses: azure/k8s-actions/k8s-create-secret@master
+      with:
+        container-registry-url: contoso.azurecr.io
+        container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+        secret-name: demo-k8s-secret
+
+    - uses: azure/k8s-actions/k8s-deploy@master
+      with:
+        manifests: |
+          manifests/deployment.yml
+          manifests/service.yml
+        images: |
+          demo.azurecr.io/k8sdemo:${{ github.sha }}
+        imagepullsecrets: |
+          demo-k8s-secret
+```
+
 ## End to end workflow for building container images and deploying to a Kubernetes cluster
 
 ```yaml
@@ -39,13 +85,13 @@ jobs:
     
     - uses: azure/k8s-actions/docker-login@master
       with:
-        login-server: demo.azurecr.io
+        login-server: contoso.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     
     - run: |
-        docker build . -t demo.azurecr.io/k8sdemo:${{ github.sha }}
-        docker push demo.azurecr.io/k8sdemo:${{ github.sha }}
+        docker build . -t contoso.azurecr.io/k8sdemo:${{ github.sha }}
+        docker push contoso.azurecr.io/k8sdemo:${{ github.sha }}
       
     - uses: azure/k8s-actions/k8s-set-context@master
       with:
@@ -53,7 +99,7 @@ jobs:
         
     - uses: azure/k8s-actions/k8s-create-secret@master
       with:
-        container-registry-url: demo.azurecr.io
+        container-registry-url: contoso.azurecr.io
         container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
         container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
         secret-name: demo-k8s-secret
