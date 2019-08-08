@@ -25,6 +25,7 @@ Rollout status is checked for the Kubernetes objects deployed. This is done to i
     manifests: '/manifests/*.*'
     kubectl-version: 'latest' # optional
 ```
+Refer to the action metadata file for details about all the inputs https://github.com/Azure/k8s-deploy/blob/master/k8s-deploy/action.yml
 
 ## End to end workflow for building container images and deploying to an Azure Kubernetes Service cluster
 
