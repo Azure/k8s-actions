@@ -8,6 +8,8 @@ The repository contains the following GitHub actions:
 * [K8s-deploy](https://github.com/Azure/k8s-actions/tree/master/K8s-deploy): Deploy manifest action for Kubernetes to bake and deploy manifests to a Kubernetes cluster.
 * [setup-kubectl](https://github.com/Azure/k8s-actions/tree/master/setup-kubectl): Install a specific version of kubectl binary on runner
 
+[GitHub Actions for Containers](https://github.com/Azure/container-actions) contains Actions to [log in to a private container registry](https://docs.docker.com/engine/reference/commandline/login/) such as [Azure Container registry](https://azure.microsoft.com/en-us/services/container-registry/). Once login is done, the next set of actions in the workflow can perform tasks such as building, tagging and pushing containers.
+
 # Usage
 Usage information for individual actions can be found in their respective directories.
 
