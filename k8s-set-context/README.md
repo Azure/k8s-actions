@@ -39,8 +39,6 @@ Refer to https://docs.microsoft.com/en-us/cli/azure/aks?view=azure-cli-latest#az
 Please refer to https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/
 
 
-
-
 ## Steps to get Service account: 
 
 #### k8s-url: Run in your local shell to get server K8s URL
@@ -57,7 +55,7 @@ Use the output of the above command
 ```sh
 kubectl get secret <service-account-secret-name> -n <namespace> -o json
 ```
-## Use secret
+## Using secret for Kubeconfig or Service Account
 Now add the values as [a secret](https://developer.github.com/actions/managing-workflows/storing-secrets/) in the GitHub repository. In the example below the secret name is `KUBE_CONFIG` and it can be used in the workflow by using the following syntax:
 ```yaml
  - uses: azure/k8s-actions/k8s-set-context@master
