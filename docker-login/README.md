@@ -19,8 +19,8 @@ Use this GitHub Action to [log in to a private container registry](https://docs.
         password: ${{ secrets.REGISTRY_PASSWORD }}
     
     - run: |
-        docker build . -t demo.azurecr.io/k8sdemo:${{ github.sha }}
-        docker push demoe.azurecr.io/k8sdemo:${{ github.sha }}
+        docker build . -t contoso.azurecr.io/k8sdemo:${{ github.sha }}
+        docker push contoso.azurecr.io/k8sdemo:${{ github.sha }}
 ```
 
 ### Prerequisite
