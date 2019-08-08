@@ -21,7 +21,7 @@ For more details refer to: [az ad sp create-for-rbac](https://docs.microsoft.com
   "clientSecret": "<client secret>",
   "subscriptionId": "<subscription id>",
   "tenantId": "<tenant id>",
-  "activeDirectoryEndpointUrl": "https://login.microsoftonline.com", // example urls
+  "activeDirectoryEndpointUrl": "https://login.microsoftonline.com", # example urls
   "resourceManagerEndpointUrl": "https://management.azure.com/",
   "activeDirectoryGraphResourceId": "https://graph.windows.net/",
   "sqlManagementEndpointUrl": "https://management.core.windows.net:8443/",
