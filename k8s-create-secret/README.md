@@ -3,7 +3,7 @@ Create a [generic secret or docker-registry secret](https://kubernetes.io/docs/c
 
 The secret will be created in the cluster context which was set earlier in the workflow by using either [`azure/k8s-actions/aks-set-context`](https://github.com/Azure/k8s-actions/tree/master/aks-set-context) or [`azure/k8s-actions/k8s-set-context`](https://github.com/Azure/k8s-actions/tree/master/k8s-set-context)
 
-Refer to the action metadata file for details about all the inputs https://github.com/Azure/k8s-create-secret/blob/master/k8s-create-secret/action.yml
+Refer to the action metadata file for details about all the inputs https://github.com/Azure/k8s-actions/blob/master/k8s-create-secret/action.yml
 
 ## For docker-registry secret (imagepullsecret)
 ```yaml
