@@ -1,13 +1,14 @@
-# GitHub actions for Kubernetes 
-GitHub actions for deploying to a Kubernetes cluster for example Azure Kubernetes service (AKS).
+# Kubernetes Actions for GitHub
 
-The repository contains the following GitHub actions:
+A set of GitHub Actions for deploying to a Kubernetes cluster, including Azure Kubernetes service (AKS) and Kubernetes running on-premises and on public clouds.
+
+The repository contains the following GitHub Actions:
 * [k8s-set-context](https://github.com/Azure/k8s-actions/tree/master/k8s-set-context): Used for setting the target K8s cluster context by providing kubeconfig or service account details
 * [aks-set-context](https://github.com/Azure/k8s-actions/tree/master/aks-set-context): Used for setting the target AKS cluster context by providing Azure subscription details
 * [k8s-create-secret](https://github.com/Azure/k8s-actions/tree/master/k8s-create-secret) : Create a generic secret or docker-registry secret in Kubernetes cluster.
 * [K8s-deploy](https://github.com/Azure/k8s-actions/tree/master/k8s-deploy): Deploy manifest action for Kubernetes to bake and deploy manifests to a Kubernetes cluster.
 * [setup-kubectl](https://github.com/Azure/k8s-actions/tree/master/setup-kubectl): Install a specific version of kubectl binary on runner
-* [docker-login](https://github.com/Azure/k8s-actions/tree/master/docker-login) : Actions to [log in to a private container registry](https://docs.docker.com/engine/reference/commandline/login/) such as [Azure Container registry](https://azure.microsoft.com/en-us/services/container-registry/). Once login is done, the next set of actions in the workflow can perform tasks such as building, tagging and pushing containers.
+* [docker-login](https://github.com/Azure/k8s-actions/tree/master/docker-login) : Actions to [log in to a private container registry](https://docs.docker.com/engine/reference/commandline/login/) such as [Azure Container registry](https://azure.microsoft.com/en-us/services/container-registry/). Once login is done, the next set of Actions in the workflow can perform tasks such as building, tagging and pushing containers.
 
 # Usage
 Usage information for individual actions can be found in their respective directories.
@@ -20,7 +21,7 @@ In the above example the secret name is `REGISTRY_USERNAME` and `REGISTRY_PASSWO
 container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
 ```
 
-## End to end workflow for building container images and deploying to an Azure Kubernetes service cluster
+## End to end workflow for building container images and deploying to an Azure Kubernetes Service cluster
 
 ```yaml
 on: [push]
@@ -66,7 +67,7 @@ jobs:
           demo-k8s-secret
 ```
 
-## End to end workflow for building container images and deploying to a Kubernetes cluster
+## End to end workflow for building container images and deploying to a generic Kubernetes cluster
 
 ```yaml
 on: [push]
