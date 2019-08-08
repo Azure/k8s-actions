@@ -3,7 +3,7 @@
 Used for setting the target K8s cluster context which will be used by other actions like [`azure/k8s-actions/k8s-deploy`](https://github.com/Azure/k8s-actions/tree/master/k8s-deploy), [`azure/k8s-actions/k8s-create-secret`](https://github.com/Azure/k8s-actions/tree/master/k8s-create-secret) etc. or run any kubectl commands.
 
 ```yaml
-- uses: azure/actions/k8s-set-context@master
+- uses: azure/k8s-actions/k8s-set-context@master
   with:
     kubeconfig: '<your kubeconfig>'v# Use secret (https://developer.github.com/actions/managing-workflows/storing-secrets/)
     context: '<context name>'  # Optional, uses the current-context from kubeconfig by default
@@ -11,7 +11,7 @@ Used for setting the target K8s cluster context which will be used by other acti
 ```
 
 ```yaml
-- uses: azure/actions/k8s-set-context@master
+- uses: azure/k8s-actions/k8s-set-context@master
   with:
     k8s-url: '<your kubernetes cluster url>'
     k8s-secret: '<service account token>' # token value from the result of the below script
