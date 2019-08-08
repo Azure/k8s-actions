@@ -24,7 +24,6 @@ Rollout status is checked for the Kubernetes objects deployed. This is done to i
       image-pull-secret2
     manifests: '/manifests/*.*'
     kubectl-version: 'latest' # optional
-  id: deploy
 ```
 
 ## End to end workflow for building container images and deploying to a Kubernetes cluster
@@ -51,15 +50,13 @@ jobs:
     - uses: azure/k8s-actions/k8s-set-context@master
       with:
         kubeconfig: ${{ secrets.KUBE_CONFIG }}
-      id: login
-
+        
     - uses: azure/k8s-actions/k8s-create-secret@master
       with:
         container-registry-url: demo.azurecr.io
         container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
         container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
         secret-name: demo-k8s-secret
-      id: set-secret
 
     - uses: azure/k8s-actions/k8s-deploy@master
       with:
@@ -70,5 +67,4 @@ jobs:
           demo.azurecr.io/k8sdemo:${{ github.sha }}
         imagepullsecrets: |
           demo-k8s-secret
-      id: deploy
 ```
