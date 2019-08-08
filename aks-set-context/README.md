@@ -29,7 +29,7 @@ For more details refer to: [az ad sp create-for-rbac](https://docs.microsoft.com
   "managementEndpointUrl": "https://management.core.windows.net/"
 }
 ```
-
+## Set secret
 Now add the json output as [a secret](https://developer.github.com/actions/managing-workflows/storing-secrets/) in the GitHub repository. In the above example the secret name is `AZURE_CREDENTIALS` and it can be used in the workflow by using the following syntax:
 ```yaml
 creds: '${{ secrets.AZURE_CREDENTIALS }}'
