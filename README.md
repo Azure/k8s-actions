@@ -1,6 +1,6 @@
 # Kubernetes Actions for GitHub
 
-A set of GitHub Actions for deploying to a Kubernetes cluster, including [Azure Kubernetes service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/) and Kubernetes running on-premises and on public clouds.
+A set of GitHub Actions for deploying to a Kubernetes cluster, including [Azure Kubernetes service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/) and any generic Kubernetes cluster.
 
 Get started today with a [free Azure account](https://azure.com/free/open-source)!
 
