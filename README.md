@@ -1,5 +1,7 @@
 # Kubernetes Actions for GitHub
 
+[GitHub Actions](https://help.github.com/en/articles/about-github-actions)  gives you the flexibility to build an automated software development lifecycle workflow. 
+
 A set of GitHub Actions for deploying to a Kubernetes cluster, including [Azure Kubernetes service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/) and any generic Kubernetes cluster.
 
 Get started today with a [free Azure account](https://azure.com/free/open-source)!
@@ -10,7 +12,12 @@ The repository contains the following GitHub Actions:
 * [k8s-create-secret](https://github.com/Azure/k8s-actions/tree/master/k8s-create-secret) : Create a generic secret or docker-registry secret in Kubernetes cluster.
 * [K8s-deploy](https://github.com/Azure/k8s-actions/tree/master/k8s-deploy): Deploy manifest action for Kubernetes to bake and deploy manifests to a Kubernetes cluster.
 * [setup-kubectl](https://github.com/Azure/k8s-actions/tree/master/setup-kubectl): Install a specific version of kubectl binary on runner
-* [docker-login](https://github.com/Azure/k8s-actions/tree/master/docker-login) : Actions to [log in to a private container registry](https://docs.docker.com/engine/reference/commandline/login/) such as [Azure Container registry](https://azure.microsoft.com/en-us/services/container-registry/). Once login is done, the next set of Actions in the workflow can perform tasks such as building, tagging and pushing containers.
+
+The [container-actions](https://github.com/Azure/container-actions/edit/master/README.md) contains:
+* [docker-login](https://github.com/Azure/container-actions/tree/master/docker-login) : Actions to [log in to a private container registry](https://docs.docker.com/engine/reference/commandline/login/) such as [Azure Container registry](https://azure.microsoft.com/en-us/services/container-registry/). Once login is done, the next set of Actions in the workflow can perform tasks such as building, tagging and pushing containers.
+
+> The docker-login Actions in this repository will be deleted in the near future. Please use the Docker Actions from [container-actions](https://github.com/Azure/container-actions/edit/master/README.md).
+
 
 # Usage
 
@@ -35,7 +42,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     
-    - uses: azure/k8s-actions/docker-login@master
+    - uses: azure/container-actions/docker-login@master
       with:
         login-server: contoso.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }}
@@ -81,7 +88,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     
-    - uses: azure/k8s-actions/docker-login@master
+    - uses: azure/container-actions/docker-login@master
       with:
         login-server: contoso.azurecr.io
         username: ${{ secrets.REGISTRY_USERNAME }}
