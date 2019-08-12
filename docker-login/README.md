@@ -1,4 +1,7 @@
 # Log in to a container registry
+
+> The docker-login Actions in this repository will be deleted in the near future. Please use the Docker Actions from [container-actions](https://github.com/Azure/container-actions/edit/master/README.md).
+
 Use this GitHub Action to [log in to a private container registry](https://docs.docker.com/engine/reference/commandline/login/) such as [Azure Container registry](https://azure.microsoft.com/en-us/services/container-registry/). Once login is done, the next set of actions in the workflow can perform tasks such as building, tagging and pushing containers.
 
 ```yaml
