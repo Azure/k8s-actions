@@ -1,4 +1,7 @@
 # Log out from a container registry
+
+> The docker-login Actions in this repository will be deleted in the near future. Please use the Docker Actions from [container-actions](https://github.com/Azure/container-actions/edit/master/README.md).
+
 Use this GitHub Action to delete the container registry context from the runner. The context file is created when [docker-login](https://github.com/Azure/k8s-actions/tree/master/docker-login) action is used.
 
 ```yaml
