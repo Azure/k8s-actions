@@ -13,10 +13,12 @@ The repository contains the following GitHub Actions:
 * [K8s-deploy](https://github.com/Azure/k8s-actions/tree/master/k8s-deploy): Deploy manifest action for Kubernetes to bake and deploy manifests to a Kubernetes cluster.
 * [setup-kubectl](https://github.com/Azure/k8s-actions/tree/master/setup-kubectl): Install a specific version of kubectl binary on runner
 
-The [container-actions](https://github.com/Azure/container-actions/edit/master/README.md) contains:
+The [container-actions](https://github.com/Azure/container-actions) contains:
 * [docker-login](https://github.com/Azure/container-actions/tree/master/docker-login) : Actions to [log in to a private container registry](https://docs.docker.com/engine/reference/commandline/login/) such as [Azure Container registry](https://azure.microsoft.com/en-us/services/container-registry/). Once login is done, the next set of Actions in the workflow can perform tasks such as building, tagging and pushing containers.
 
-> The docker-login Actions in this repository will be deleted in the near future. Please use the Docker Actions from [container-actions](https://github.com/Azure/container-actions/edit/master/README.md).
+> The docker-login Actions in this repository will be deleted in the near future. Please use the Docker Actions from [container-actions](https://github.com/Azure/container-actions).
+
+[Azure Actions repository](https://github.com/Azure/actions) has a list of all the GitHub Azure Actions.
 
 
 # Usage
