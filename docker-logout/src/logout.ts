@@ -4,6 +4,7 @@ import * as core from '@actions/core';
 import { issueCommand } from '@actions/core/lib/command';
 
 function run() {
+    core.warning('This action is moved to azure/containers-actions repository, update your workflows to use those actions instead.');
     let pathToDockerConfig = process.env['DOCKER_CONFIG'];
     if (pathToDockerConfig && ioUtil.exists(pathToDockerConfig)) {
         io.rmRF(pathToDockerConfig); // Deleting the docker config directory

@@ -15,6 +15,7 @@ const path = require("path");
 const fs = require("fs");
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
+        core.warning('This action is moved to azure/containers-actions repository, update your workflows to use those actions instead.');
         let username = core.getInput('username', { required: true });
         let password = core.getInput('password', { required: true });
         let loginServer = core.getInput('login-server', { required: true });
