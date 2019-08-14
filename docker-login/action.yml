@@ -12,7 +12,7 @@ inputs:
   login-server:
     description: 'Container registry server url'
     required: true
-    default: 'index.docker.io'
+    default: 'https://index.docker.io/v1/'
 branding:
   color: 'green'
 runs:
