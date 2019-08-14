@@ -5,6 +5,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 
 async function run() {
+    core.warning('This action is moved to azure/containers-actions repository, update your workflows to use those actions instead.');
     let username = core.getInput('username', { required: true });
     let password = core.getInput('password', { required: true });
     let loginServer = core.getInput('login-server', { required: true });
