@@ -1,4 +1,4 @@
-# GitHub Actions for Kubernetes
+# GitHub Actions for Azure Kubernetes service or any generic Kubernetes cluster
 
 [GitHub Actions](https://help.github.com/en/articles/about-github-actions)  gives you the flexibility to build an automated software development lifecycle workflow. 
 
