@@ -1,4 +1,4 @@
-# Kubernetes Actions for GitHub
+# GitHub Actions for Kubernetes
 
 [GitHub Actions](https://help.github.com/en/articles/about-github-actions)  gives you the flexibility to build an automated software development lifecycle workflow. 
 
@@ -18,7 +18,7 @@ The [container-actions](https://github.com/Azure/container-actions) contains:
 
 > The docker-login Actions in this repository (k8s-actions) will be deleted in the near future. Please use the Docker Actions from [container-actions](https://github.com/Azure/container-actions).
 
-[Azure Actions repository](https://github.com/Azure/actions) has a list of all the GitHub Azure Actions.
+[Azure Actions repository](https://github.com/Azure/actions) has a list of all the GitHub Actions for Azure.
 
 
 # Usage
