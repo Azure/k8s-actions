@@ -1,0 +1,13 @@
+aks-set-context/* @ds-ms
+
+docker-login/* @ds-ms
+
+docker-logout/* @ds-ms
+
+k8s-create-secret/* @vithati
+
+k8s-deploy/* @ds-ms
+
+setup-kubectl/* @ds-ms
+
+node_modules/* @ds-ms @vithati
