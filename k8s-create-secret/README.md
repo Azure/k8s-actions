@@ -8,7 +8,7 @@ Refer to the action metadata file for details about all the inputs https://githu
 ## For docker-registry secret (imagepullsecret)
 ```yaml
     - name: Set imagePullSecret
-      uses: azure/k8s-actions/k8s-set-secret@master
+      uses: azure/k8s-actions/k8s-create-secret@master
       with:
         namespace: 'myapp'
         container-registry-url: 'containerregistry.contoso.com'
