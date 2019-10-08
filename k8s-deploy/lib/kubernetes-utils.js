@@ -90,6 +90,7 @@ function substituteImageNameInSpecContent(currentString, imageName, imageNameWit
                 .split(':');
             core.debug('currentImageName : ' + currentImageName);
             core.debug('imageName : ' + imageName);
+            core.debug('imageNameWithNewTag : ' + imageNameWithNewTag);
             if (currentImageName === imageName) {
                 return acc + `${imageKeyword[0]} ${imageNameWithNewTag}\n`;
             }
@@ -101,7 +102,10 @@ function updateContainerImagesInManifestFiles(contents, containers) {
     if (!!containers && containers.length > 0) {
         containers.forEach((container) => {
             core.debug('Container: ' + container);
-            let imageName = container.split(':')[0];
+            let imageName = container;
+            if (imageName.indexOf(':') > 0) {
+                imageName = imageName.substring(0, imageName.lastIndexOf(':'));
+            }
             core.debug('ImageName 1: ' + imageName);
             if (imageName.indexOf('@') > 0) {
                 imageName = imageName.split('@')[0];
