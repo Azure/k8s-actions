@@ -75,6 +75,7 @@ function setImagePullSecrets(inputObject, newImagePullSecrets) {
     }
 }
 function substituteImageNameInSpecContent(currentString, imageName, imageNameWithNewTag) {
+    core.debug('substituteImageNameInSpecContent : ' + imageName);
     if (currentString.indexOf(imageName) < 0) {
         core.debug(`No occurence of replacement token: ${imageName} found`);
         return currentString;
@@ -87,6 +88,8 @@ function substituteImageNameInSpecContent(currentString, imageName, imageNameWit
                 .trim()
                 .replace(/[',"]/g, '') // replace allowed quotes with nothing
                 .split(':');
+            core.debug('currentImageName : ' + currentImageName);
+            core.debug('imageName : ' + imageName);
             if (currentImageName === imageName) {
                 return acc + `${imageKeyword[0]} ${imageNameWithNewTag}\n`;
             }
@@ -97,10 +100,13 @@ function substituteImageNameInSpecContent(currentString, imageName, imageNameWit
 function updateContainerImagesInManifestFiles(contents, containers) {
     if (!!containers && containers.length > 0) {
         containers.forEach((container) => {
+            core.debug('Container: ' + container);
             let imageName = container.split(':')[0];
+            core.debug('ImageName 1: ' + imageName);
             if (imageName.indexOf('@') > 0) {
                 imageName = imageName.split('@')[0];
             }
+            core.debug('ImageName 2: ' + imageName);
             if (contents.indexOf(imageName) > 0) {
                 contents = substituteImageNameInSpecContent(contents, imageName, container);
             }
