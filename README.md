@@ -33,6 +33,16 @@ In the above example the secret name is `REGISTRY_USERNAME` and `REGISTRY_PASSWO
 container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
 ```
 
+To use an Azure Service Principal, create a secret called AZURE_CREDENTIALS that contains: 
+```json
+{
+"tenantId": "<yourtenantid>",
+"clientId": "<yourclientid>",
+"clientSecret": "<yourclientsecret>",
+"subscriptionId": "<yoursubscriptionid>"
+}   
+```
+
 ## End to end workflow for building container images and deploying to an Azure Kubernetes Service cluster
 
 ```yaml
