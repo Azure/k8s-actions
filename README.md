@@ -1,7 +1,7 @@
  ***IMPORTANT NOTICE:***
  
 ***Actions hosted in this repo are now moved to new GitHub repositories. Please update your existing workflows with the new actions as these old actions will be DEPRECATED and will not be available for use, starting NOV 10, 2019. Refer to https://github.com/Azure/actions for updated action repo details.***  
-***For example, the action `azure/appservice-actions/webapp@master` should be replaced with `azure/webapps-deploy@v1` in your workflows.***
+***For example, the action `azure/k8s-actions/k8s-deploy@master` should be replaced with `Azure/k8s-deploy@v1` in your workflows.***
 
 |  |Old Action  |New Action  |
 |---------|---------|---------|
