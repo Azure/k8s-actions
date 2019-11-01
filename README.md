@@ -1,136 +1,15 @@
-# GitHub Actions for Azure Kubernetes service or any generic Kubernetes cluster
+ ***IMPORTANT NOTICE:***
+ 
+***Actions hosted in this repo are now moved to new GitHub repositories. Please update your existing workflows with the new actions as these old actions will be DEPRECATED and will not be available for use, starting NOV 10, 2019. Refer to https://github.com/Azure/actions for updated action repo details.***  
+***For example, the action `azure/appservice-actions/webapp@master` should be replaced with `azure/webapps-deploy@v1` in your workflows.***
 
-[GitHub Actions](https://help.github.com/en/articles/about-github-actions)  gives you the flexibility to build an automated software development lifecycle workflow. 
-
-A set of GitHub Actions for deploying to a Kubernetes cluster, including [Azure Kubernetes service (AKS)](https://azure.microsoft.com/en-us/services/kubernetes-service/) and any generic Kubernetes cluster.
-
-Get started today with a [free Azure account](https://azure.com/free/open-source)!
-
-The repository contains the following GitHub Actions:
-* [k8s-set-context](https://github.com/Azure/k8s-actions/tree/master/k8s-set-context): Used for setting the target K8s cluster context by providing kubeconfig or service account details
-* [aks-set-context](https://github.com/Azure/k8s-actions/tree/master/aks-set-context): Used for setting the target AKS cluster context by providing Azure subscription details
-* [k8s-create-secret](https://github.com/Azure/k8s-actions/tree/master/k8s-create-secret) : Create a generic secret or docker-registry secret in Kubernetes cluster.
-* [K8s-deploy](https://github.com/Azure/k8s-actions/tree/master/k8s-deploy): Deploy manifest action for Kubernetes to bake and deploy manifests to a Kubernetes cluster.
-* [setup-kubectl](https://github.com/Azure/k8s-actions/tree/master/setup-kubectl): Install a specific version of kubectl binary on runner
-
-The [container-actions](https://github.com/Azure/container-actions) contains:
-* [docker-login](https://github.com/Azure/container-actions/tree/master/docker-login) : Actions to [log in to a private container registry](https://docs.docker.com/engine/reference/commandline/login/) such as [Azure Container registry](https://azure.microsoft.com/en-us/services/container-registry/). Once login is done, the next set of Actions in the workflow can perform tasks such as building, tagging and pushing containers.
-
-> The docker-login Actions in this repository (k8s-actions) will be deleted in the near future. Please use the Docker Actions from [container-actions](https://github.com/Azure/container-actions).
-
-[Azure Actions repository](https://github.com/Azure/actions) has a list of all the GitHub Actions for Azure.
-
-
-# Usage
-
-Usage information for individual actions can be found in their respective directories.
-
-For any credential like Azure Service Principal, Kubeconfig, add them as [secrets](https://developer.github.com/actions/managing-workflows/storing-secrets/) in the GitHub repository and then use them in the workflow.
-
-In the above example the secret name is `REGISTRY_USERNAME` and `REGISTRY_PASSWORD` and it can be used in the workflow by using the following syntax:
-
-```yaml
-container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
-```
-
-To use an Azure Service Principal, create a secret called AZURE_CREDENTIALS that contains: 
-```json
-{
-"tenantId": "<yourtenantid>",
-"clientId": "<yourclientid>",
-"clientSecret": "<yourclientsecret>",
-"subscriptionId": "<yoursubscriptionid>"
-}   
-```
-
-## End to end workflow for building container images and deploying to an Azure Kubernetes Service cluster
-
-```yaml
-on: [push]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    
-    - uses: azure/container-actions/docker-login@master
-      with:
-        login-server: contoso.azurecr.io
-        username: ${{ secrets.REGISTRY_USERNAME }}
-        password: ${{ secrets.REGISTRY_PASSWORD }}
-    
-    - run: |
-        docker build . -t contoso.azurecr.io/k8sdemo:${{ github.sha }}
-        docker push contoso.azurecr.io/k8sdemo:${{ github.sha }}
-      
-    # Set the target AKS cluster. 
-    - uses: azure/k8s-actions/aks-set-context@master
-      with:
-        creds: '${{ secrets.AZURE_CREDENTIALS }}'
-        cluster-name: contoso
-        resource-group: contoso-rg
-        
-    - uses: azure/k8s-actions/k8s-create-secret@master
-      with:
-        container-registry-url: contoso.azurecr.io
-        container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
-        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-        secret-name: demo-k8s-secret
-
-    - uses: azure/k8s-actions/k8s-deploy@master
-      with:
-        manifests: |
-          manifests/deployment.yml
-          manifests/service.yml
-        images: |
-          contoso.azurecr.io/k8sdemo:${{ github.sha }}
-        imagepullsecrets: |
-          demo-k8s-secret
-```
-
-## End to end workflow for building container images and deploying to a generic Kubernetes cluster
-
-```yaml
-on: [push]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    
-    - uses: azure/container-actions/docker-login@master
-      with:
-        login-server: contoso.azurecr.io
-        username: ${{ secrets.REGISTRY_USERNAME }}
-        password: ${{ secrets.REGISTRY_PASSWORD }}
-    
-    - run: |
-        docker build . -t contoso.azurecr.io/k8sdemo:${{ github.sha }}
-        docker push contoso.azurecr.io/k8sdemo:${{ github.sha }}
-      
-    - uses: azure/k8s-actions/k8s-set-context@master
-      with:
-        kubeconfig: ${{ secrets.KUBE_CONFIG }}
-        
-    - uses: azure/k8s-actions/k8s-create-secret@master
-      with:
-        container-registry-url: contoso.azurecr.io
-        container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
-        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-        secret-name: demo-k8s-secret
-
-    - uses: azure/k8s-actions/k8s-deploy@master
-      with:
-        manifests: |
-          manifests/deployment.yml
-          manifests/service.yml
-        images: |
-          contoso.azurecr.io/k8sdemo:${{ github.sha }}
-        imagepullsecrets: |
-          demo-k8s-secret
-```
+|  |Old Action  |New Action  |
+|---------|---------|---------|
+| [Kubernetes deploy](https://github.com/Azure/k8s-deploy) |`azure/k8s-actions/k8s-deploy@master` | **`Azure/k8s-deploy@v1`**|
+|[AKS set context](https://github.com/Azure/aks-set-context)|`azure/k8s-actions/aks-set-context@master` | **`azure/aks-set-context@v1`**  |
+| [Kubernetes set context](https://github.com/Azure/k8s-set-context) |`azure/k8s-actions/k8s-set-context@master` | **`azure/k8s-set-context@v1`**|
+| [Kubernetes create secret](https://github.com/Azure/k8s-create-secret) |`azure/k8s-actions/k8s-create-secret@master` | **`azure/k8s-create-secret@v1`**|
+|[Kubectl tool installer](https://github.com/Azure/setup-kubectl)|`azure/k8s-actions/setup-kubectl@master` | **`azure/setup-kubectl@v1`**  |
 
 # Contributing
 
