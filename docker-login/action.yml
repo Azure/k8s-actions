@@ -5,6 +5,7 @@ inputs:
     description: 'Container registry username'
     required: true
     default: ''
+    deprecationMessage: 'This action is ARCHIVED and will not receive any updates, update your workflows to use the new action azure/docker-login@v1'
   password:
     description: 'Container registry password'
     required: true
