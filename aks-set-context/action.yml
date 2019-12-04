@@ -5,6 +5,7 @@ inputs:
     description: 'Azure credentials i.e. output of `az ad sp create-for-rbac --sdk-auth`'
     required: true
     default: ''
+    deprecationMessage: 'This action is ARCHIVED and will not receive any updates, update your workflows to use the new action azure/aks-set-context@v1'
   resource-group:
     description: 'Resource Group Name'
     required: false

@@ -9,6 +9,7 @@ inputs:
     description: 'Path to the manifest files which will be used for deployment.'
     required: true
     default: ''
+    deprecationMessage: 'This action is ARCHIVED and will not receive any updates, update your workflows to use the new action azure/k8s-deploy@v1'
   images: 
     description: 'Fully qualified resource URL of the image(s) to be used for substitutions on the manifest files
 Example: contosodemo.azurecr.io/helloworld:test'

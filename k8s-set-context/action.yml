@@ -6,6 +6,7 @@ inputs:
     description: 'Kubernetes Config'
     required: false
     default: ''
+    deprecationMessage: "This action is ARCHIVED and will not receive any updates, update your workflows to use the new action azure/k8s-set-context@v1"
   context:
     description: 'If your kubeconfig has multiple contexts, use this field to use a specific context, otherwise the default one would be chosen'
     required: false

@@ -8,6 +8,7 @@ inputs:
   container-registry-url:
     description: 'Container registry url'
     required: false
+    deprecationMessage: 'This action is ARCHIVED and will not receive any updates, update your workflows to use the new action azure/k8s-create-secret@v1'
   container-registry-username:
     description: 'Container registry username'
     required: false
