@@ -5,7 +5,7 @@ inputs:
     description: 'Version of kubectl'
     required: true
     default: 'latest'
-    deprecationMessage: "This action is ARCHIVED and will not receive any updates, update your workflows to use the new action azure/setup-kubectl@v1"setup-kubectl
+    deprecationMessage: 'This action is ARCHIVED and will not receive any updates, update your workflows to use the new action azure/setup-kubectl@v1'
 outputs:
   kubectl-path:
     description: 'Path to the cached kubectl binary'
